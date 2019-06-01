@@ -37,6 +37,8 @@ flask run
 References
 * https://codefresh.io/docker-tutorial/hello-whale-getting-started-docker-flask/
 * https://learnk8s.io/blog/installing-docker-and-kubernetes-on-windows/
+* https://blogmilind.wordpress.com/2018/01/30/running-local-docker-images-in-kubernetes/
+* https://github.com/kubernetes/minikube/blob/master/README.md
 
 ```bash
 # Keep forgetting that I have Choco installed for Windows...
@@ -66,18 +68,30 @@ docker stop $DKR_ID
 ```
 
 ```bash
-# After minikube is installed... start minikube
-minikube start
+# After minikube is installed, start minikube
+# For first-time creations, I needed to restart this process a few times
+minikube start --v=7 --alsologtostderr
+
+# Integrate Docker to Minikube
+minikube docker-env
+docker ps
 
 # Check K8s status
 kubectl get pods
 
-# Check docker connection
-minikube docker-env
-docker ps
+# Can SSH into Minikube to debug
+minikube ssh
 
-# Similar to Docker VM
-curl http://192.168.99.101:5000
+# Deploy the local Docker image into Minikube
+docker build -t neoquest3:latest .
+kubectl run neoquest3 --image=neoquest3:latest --image-pull-policy=Never --port=5000
+kubectl expose deployment neoquest3 --type=NodePort
 
-minikube delete
+# Open the webapp based on K8s configs
+minikube service neoquest3
+
+# Teardown deployment and stop the Minikube cluster
+kubectl delete deployment neoquest3
+kubectl delete svc neoquest3
+minikube stop
 ```
