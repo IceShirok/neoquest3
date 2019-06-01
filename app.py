@@ -1,14 +1,10 @@
-import json
+
+from pet.pet import Pet
 
 
 def run_app():
-    print('Hello world!')
-
-    with open('stats.json') as f:
-        lines = f.readlines()
-        for line in lines:
-            print(json.dumps(json.loads(line), indent=4))
-    f.close()
+    my_pet = Pet(name='Dorian', species='Kiwi')
+    print(my_pet)
 
 
 if __name__ == '__main__':
