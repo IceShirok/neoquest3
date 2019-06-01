@@ -1,11 +1,21 @@
-
+from flask import Flask, render_template
 from pet.pet import Pet
 
+import logging
 
-def run_app():
-    my_pet = Pet(name='Dorian', species='Kiwi')
-    print(my_pet)
+app = Flask(__name__)
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+ch = logging.StreamHandler()
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 
 
-if __name__ == '__main__':
-    run_app()
+@app.route('/')
+def index():
+    my_pet = Pet(name='Wulgar', species='Lupe', color='Desert', gender='Male')
+    return render_template('index.html',
+                           title='Pet Page',
+                           pet=my_pet)

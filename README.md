@@ -19,3 +19,15 @@ Yes, the tech I'll be throwing at this will be super overengineering. The projec
 * https://idnq.net/
 * http://thedailyneopets.com/articles/status-titles/
 * http://www.oocities.org/neoquest_2/skills.html
+
+## Web Application
+The web application currently serves as a testing ground to view the PC model in a web browser.
+
+To run the web application, run the following commands:
+
+```
+# Windows Powershell
+$env:FLASK_APP = "app"
+$env:FLASK_DEBUG = "development"
+flask run
+```

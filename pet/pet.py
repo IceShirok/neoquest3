@@ -1,14 +1,16 @@
-import json
-
 
 class Pet(object):
 
-    def __init__(self, name, species,
-                 level=1, strength=6, movement=7, defense=8, intelligence=9,
+    def __init__(self, name, species, color, gender,
+                 level=1, health=6, strength=6, movement=7, defense=8, intelligence=9,
                  hunger=6, mood=4):
         self.name = name
         self.species = species
+        self.color = color
+        self.gender = gender
         self.level = level
+        self.max_health = health
+        self.current_health = health
         self.strength = strength
         self.movement = movement
         self.defense = defense
@@ -16,19 +18,41 @@ class Pet(object):
         self.hunger = hunger
         self.mood = mood
 
-    def __str__(self):
-        p = {
-            'name': self.name,
-            'species': self.species,
-            'level': get_level_desc(self.level),
-            'strength': get_strength_desc(self.strength),
-            'movement': get_movement_desc(self.movement),
-            'defense': get_defence_desc(self.defense),
-            'intelligence': get_intelligence_desc(self.intelligence),
-            'hunger': get_hunger_desc(self.hunger),
-            'mood': get_mood_desc(self.mood),
-        }
-        return json.dumps(p, indent=4)
+    @property
+    def image(self):
+        return generate_image_url(self.species, self.color)
+
+    @property
+    def level_desc(self):
+        return get_level_desc(self.level)
+
+    @property
+    def strength_desc(self):
+        return get_strength_desc(self.strength)
+
+    @property
+    def movement_desc(self):
+        return get_movement_desc(self.movement)
+
+    @property
+    def defense_desc(self):
+        return get_defense_desc(self.defense)
+
+    @property
+    def intelligence_desc(self):
+        return get_intelligence_desc(self.intelligence)
+
+    @property
+    def hunger_desc(self):
+        return get_hunger_desc(self.hunger)
+
+    @property
+    def mood_desc(self):
+        return get_mood_desc(self.mood)
+
+
+def generate_image_url(species, color):
+    return 'http://images.neopets.com/pets/{}_{}_baby.gif'.format(species.lower(), color.lower())
 
 
 def get_level_desc(val):
@@ -134,7 +158,7 @@ def get_movement_desc(val):
         return "Ultimate"
 
 
-def get_defence_desc(val):
+def get_defense_desc(val):
     if 1 <= val <= 1:
         return "Defenceless"
     elif 2 <= val <= 2:
