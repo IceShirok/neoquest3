@@ -63,10 +63,8 @@ docker run -d -p 5000:5000 neoquest3
 # View Docker deploy status
 docker ps -a
 
-# If you're seeing an IP address of 192.168.99.100 you're probably using Docker Toolbox
-# or Docker Machine, which is running Docker on a Linux VM, and that's the default
-# IP address of that VM. If you're using one of these options to run Docker then
-# you have to use the $(docker-machine ip) address, usually 192.168.99.100.
+# You'll need to find the IP address of the Docker or K8s cluster
+# that is run on a VM
 curl http://192.168.99.100:5000
 
 # Stop Docker deployment
