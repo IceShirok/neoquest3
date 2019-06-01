@@ -5,27 +5,32 @@
 <p>This site is currently being built by our hired professionally-trained gophers.</p>
 
 <div id="banner" class="columns">
-    <div class="column col-3">
-        <h2>{{ pet.name }} the {{ pet.color }} {{ pet.species }}</h2>
-        <img src="{{ pet.image }}" />
-    </div>
-    <div class="column col-3">
-        <ul>
-            <li>Gender: <strong>{{ pet.gender }}</strong></li>
-            <li>Age: <strong>TBD</strong></li>
-            <li>Level: <strong>{{ pet.level }}</strong></li>
-            <li>Health: <strong>{{ pet.current_health }} / {{ pet.max_health }}</strong></li>
-            <li>Mood: <strong>{{ pet.mood_desc }}</strong></li>
-            <li>Hunger: <strong>{{ pet.hunger_desc }}</strong></li>
-            <li>Strength: <strong>{{ pet.strength_desc }}</strong></li>
-            <li>Defence: <strong>{{ pet.defense_desc }}</strong></li>
-            <li>Move: <strong>{{ pet.movement_desc }}</strong></li>
-            <li>Intelligence: <strong>{{ pet.intelligence_desc }}</strong></li>
-        </ul>
-    </div>
+    <div class="column col-3"></div>
     <div class="column col-6">
-        <h2>{{ pet.name }}</h2>
+        <div class="columns">
+            <div class="column col-6">
+                <h2>{{ pet.name }} the {{ pet.color }} {{ pet.species }}</h2>
+                <img src="{{ pet.image }}" />
+            </div>
+            <div class="column col-6">
+                <ul>
+                    <li>Gender: <strong>{{ pet.gender }}</strong></li>
+                    <li>Age: <strong>TBD</strong></li>
+                    <li>Level: <strong>{{ pet.level_desc }}</strong></li>
+                    <li>Health: <strong>{{ pet.current_health }} / {{ pet.max_health }}</strong></li>
+                    <li>Mood: <strong>{{ pet.mood_desc }}</strong></li>
+                    <li>Hunger: <strong>{{ pet.hunger_desc }}</strong></li>
+                    <li>Strength: <strong>{{ pet.strength_desc }} ({{ pet.strength }})</strong></li>
+                    <li>Defence: <strong>{{ pet.defense_desc }} ({{ pet.defense }})</strong></li>
+                    <li>Move: <strong>{{ pet.movement_desc }} ({{ pet.movement }})</strong></li>
+                    <li>Intelligence: <strong>{{ pet.intelligence_desc }} ({{ pet.intelligence }})</strong></li>
+                </ul>
+            </div>
+        </div>
+        <hr />
+        <p>Challenge {{ pet.name }} to a duel in the battledome!</p>
     </div>
+    <div class="column col-3"></div>
 </div>
 {{ pet.name }}
 {{ pet.image }}
