@@ -1,11 +1,16 @@
 from flask import render_template
 from app import app
-from app.pet.pet import Pet
+from app.models import User, Pet
+from app.pet import pet_desc
 
 
 @app.route('/')
 def index():
-    my_pet = Pet(name='Wulgar', species='Lupe', color='Desert', gender='Male')
+    user = User.query.filter_by(username='katya').first_or_404()
+    pet = Pet.query.filter_by(name='Wulgar').first_or_404()
+
     return render_template('index.html',
                            title='Pet Page',
-                           pet=my_pet)
+                           pet=pet,
+                           user=user,
+                           pet_desc=pet_desc)

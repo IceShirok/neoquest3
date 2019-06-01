@@ -10,20 +10,21 @@
         <div class="columns">
             <div class="column col-6">
                 <h2>{{ pet.name }} the {{ pet.color }} {{ pet.species }}</h2>
-                <img src="{{ pet.image }}" />
+                <img src="{{ pet_desc.generate_image_url(pet.species, pet.color) }}" />
             </div>
             <div class="column col-6">
                 <ul>
+                    <li>Owner: <strong>{{ user.username }}</strong></li>
                     <li>Gender: <strong>{{ pet.gender }}</strong></li>
                     <li>Age: <strong>TBD</strong></li>
-                    <li>Level: <strong>{{ pet.level_desc }}</strong></li>
+                    <li>Level: <strong>{{ pet_desc.get_level_desc(pet.level) }}</strong></li>
                     <li>Health: <strong>{{ pet.current_health }} / {{ pet.max_health }}</strong></li>
-                    <li>Mood: <strong>{{ pet.mood_desc }}</strong></li>
-                    <li>Hunger: <strong>{{ pet.hunger_desc }}</strong></li>
-                    <li>Strength: <strong>{{ pet.strength_desc }} ({{ pet.strength }})</strong></li>
-                    <li>Defence: <strong>{{ pet.defense_desc }} ({{ pet.defense }})</strong></li>
-                    <li>Move: <strong>{{ pet.movement_desc }} ({{ pet.movement }})</strong></li>
-                    <li>Intelligence: <strong>{{ pet.intelligence_desc }} ({{ pet.intelligence }})</strong></li>
+                    <li>Mood: <strong>{{ pet_desc.get_mood_desc(pet.mood) }}</strong></li>
+                    <li>Hunger: <strong>{{ pet_desc.get_hunger_desc(pet.hunger) }}</strong></li>
+                    <li>Strength: <strong>{{ pet_desc.get_strength_desc(pet.strength) }} ({{ pet.strength }})</strong></li>
+                    <li>Defence: <strong>{{ pet_desc.get_defense_desc(pet.defense) }} ({{ pet.defense }})</strong></li>
+                    <li>Move: <strong>{{ pet_desc.get_movement_desc(pet.movement) }} ({{ pet.movement }})</strong></li>
+                    <li>Intelligence: <strong>{{ pet_desc.get_intelligence_desc(pet.intelligence) }} ({{ pet.intelligence }})</strong></li>
                 </ul>
             </div>
         </div>
@@ -32,6 +33,4 @@
     </div>
     <div class="column col-3"></div>
 </div>
-{{ pet.name }}
-{{ pet.image }}
 {% endblock %}
