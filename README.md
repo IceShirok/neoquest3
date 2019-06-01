@@ -32,14 +32,28 @@ $env:FLASK_DEBUG = "development"
 flask run
 ```
 
-## Docker Deployment
+## Docker and Kubernetes Deployment
 
-Ref: https://codefresh.io/docker-tutorial/hello-whale-getting-started-docker-flask/
+References
+* https://codefresh.io/docker-tutorial/hello-whale-getting-started-docker-flask/
+* https://learnk8s.io/blog/installing-docker-and-kubernetes-on-windows/
+
+```bash
+# Keep forgetting that I have Choco installed for Windows...
+choco install minikube -y
+choco install docker -y
+```
 
 ```bash
 # Build and deploy image
 docker build -t neoquest3:latest .
-DKR_ID=`docker run -d -p 5000:5000 neoquest3`
+docker run -d -p 5000:5000 neoquest3
+
+# View Docker deploy status
+docker ps -a
+
+# Use docker-compose to deploy
+docker-compose up
 
 # If you're seeing an IP address of 192.168.99.100 you're probably using Docker Toolbox
 # or Docker Machine, which is running Docker on a Linux VM, and that's the default
@@ -47,12 +61,23 @@ DKR_ID=`docker run -d -p 5000:5000 neoquest3`
 # you have to use the $(docker-machine ip) address, usually 192.168.99.100.
 curl http://192.168.99.100:5000
 
-# View Docker deploy status
-docker ps -a
-
 # Stop Docker deployment
 docker stop $DKR_ID
+```
 
-# Use docker-compose to deploy
-docker-compose up
+```bash
+# After minikube is installed... start minikube
+minikube start
+
+# Check K8s status
+kubectl get pods
+
+# Check docker connection
+minikube docker-env
+docker ps
+
+# Similar to Docker VM
+curl http://192.168.99.101:5000
+
+minikube delete
 ```
