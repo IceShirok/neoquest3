@@ -4,11 +4,10 @@ import json
 def run_app():
     print('Hello world!')
 
-    with open('skills.json') as f:
+    with open('stats.json') as f:
         lines = f.readlines()
         for line in lines:
-            skill = json.loads(line)
-            print(json.dumps(skill, indent=4))
+            print(json.dumps(json.loads(line), indent=4))
     f.close()
 
 

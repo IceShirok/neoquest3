@@ -15,7 +15,7 @@ Yes, the tech I'll be throwing at this will be super overengineering. The projec
 
 ## References
 
-* neoquest: https://idnq.net/
 * ooh it'd be fun to make it like Tir-Nan-Og
-* https://thedailyneopets.com/articles/status-titles/
+* https://idnq.net/
+* http://thedailyneopets.com/articles/status-titles/
 * http://www.oocities.org/neoquest_2/skills.html
