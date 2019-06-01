@@ -31,3 +31,28 @@ $env:FLASK_APP = "app"
 $env:FLASK_DEBUG = "development"
 flask run
 ```
+
+## Docker Deployment
+
+Ref: https://codefresh.io/docker-tutorial/hello-whale-getting-started-docker-flask/
+
+```bash
+# Build and deploy image
+docker build -t neoquest3:latest .
+DKR_ID=`docker run -d -p 5000:5000 neoquest3`
+
+# If you're seeing an IP address of 192.168.99.100 you're probably using Docker Toolbox
+# or Docker Machine, which is running Docker on a Linux VM, and that's the default
+# IP address of that VM. If you're using one of these options to run Docker then
+# you have to use the $(docker-machine ip) address, usually 192.168.99.100.
+curl http://192.168.99.100:5000
+
+# View Docker deploy status
+docker ps -a
+
+# Stop Docker deployment
+docker stop $DKR_ID
+
+# Use docker-compose to deploy
+docker-compose up
+```

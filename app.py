@@ -19,3 +19,7 @@ def index():
     return render_template('index.html',
                            title='Pet Page',
                            pet=my_pet)
+
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
