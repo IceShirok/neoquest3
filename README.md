@@ -39,6 +39,7 @@ References
 * https://learnk8s.io/blog/installing-docker-and-kubernetes-on-windows/
 * https://blogmilind.wordpress.com/2018/01/30/running-local-docker-images-in-kubernetes/
 * https://github.com/kubernetes/minikube/blob/master/README.md
+* TBD: https://kubernetes.io/docs/tasks/run-application/run-single-instance-stateful-application/
 
 ```bash
 # Keep forgetting that I have Choco installed for Windows...
