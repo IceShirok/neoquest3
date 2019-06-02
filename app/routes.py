@@ -78,10 +78,10 @@ def view_tavern():
 
 @app.route('/guild', methods=['GET', 'POST'])
 def view_pet_creation():
-    pets = get_pets_by_user(current_user.username)
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
-    elif len(pets) > 4:
+    pets = get_pets_by_user(current_user.username)
+    if len(pets) > 4:
         form = None
     else:
         form = CreatePetForm()
@@ -95,6 +95,17 @@ def view_pet_creation():
     return render_template('guild.html',
                            title="Adventurers' Guild",
                            form=form)
+
+
+@app.route('/exile')
+def view_pet_exile():
+    pets = get_pets_by_user(current_user.username)
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    return render_template('exile.html',
+                           title="Black Market",
+                           pets=pets,
+                           pet_desc=pet_desc)
 
 
 @app.route('/party')

@@ -1,6 +1,27 @@
 
-def generate_image_url(species, color):
-    return 'http://images.neopets.com/pets/{}_{}_baby.gif'.format(species.lower(), color.lower())
+pet_poses = {
+    'happy',
+    'sad',
+    'beaten',
+    'angry',
+    'rangedattack',
+    'closeattack',
+    'defended',
+    'hit'
+}
+
+pet_positions = {
+    'baby',
+    'left',
+    'right',
+}
+
+
+def generate_image_url(species, color, pose=None, position='baby'):
+    if not pose:
+        return 'http://images.neopets.com/pets/{}_{}_baby.gif'.format(species.lower(), color.lower())
+    else:
+        return 'http://images.neopets.com/pets/{}/{}_{}_{}.gif'.format(pose, species.lower(), color.lower(), position)
 
 
 def get_level_desc(val):
