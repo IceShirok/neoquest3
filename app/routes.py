@@ -39,7 +39,6 @@ def logout():
 
 @app.route('/')
 @app.route('/index')
-@login_required
 def index():
     return render_template('index.html',
                            title='NeoQuest Portal')
@@ -71,15 +70,15 @@ def view_vocations():
 
 
 @app.route('/tavern', methods=['GET', 'POST'])
+@login_required
 def view_tavern():
     return render_template('tavern.html',
                            title="The Tavern")
 
 
 @app.route('/guild', methods=['GET', 'POST'])
+@login_required
 def view_pet_creation():
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
     pets = get_pets_by_user(current_user.username)
     if len(pets) > 4:
         form = None
@@ -98,10 +97,9 @@ def view_pet_creation():
 
 
 @app.route('/exile')
+@login_required
 def view_pet_exile():
     pets = get_pets_by_user(current_user.username)
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
     return render_template('exile.html',
                            title="Black Market",
                            pets=pets,
@@ -122,10 +120,9 @@ def exile_pet(name):
 
 
 @app.route('/veterans')
+@login_required
 def view_pet_veterans():
     pets = Pet.query.filter_by(owner=None).all()
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
     return render_template('veterans.html',
                            title="Black Market",
                            pets=pets,
@@ -146,6 +143,7 @@ def recruit_pet(name):
 
 
 @app.route('/party')
+@login_required
 def view_my_pets():
     return redirect(url_for('view_user', name=current_user.username))
 
