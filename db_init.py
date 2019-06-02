@@ -1,24 +1,33 @@
 from app import app, db
 from app.models import User, Pet
 
-u = User(username='katya', email='katya@example.com')
-db.session.add(u)
-db.session.commit()
+users = [
+    User(username='katya', email='katya@example.com'),
+    User(username='arno', email='arno@example.com'),
+]
+for user in users:
+    db.session.add(user)
 
-p = Pet(
-    name='Wulgar',
-    species='Lupe',
-    color='Desert',
-    gender=1,
-    level=1,
-    max_health=6,
-    current_health=6,
-    strength=6,
-    movement=7,
-    defense=8,
-    intelligence=9,
-    hunger=6,
-    mood=4,
-)
-db.session.add(p)
+pets = [
+    Pet(
+        name='Wulgar',
+        owner='katya',
+        species='Lupe',
+        color='Desert',
+        gender=1,
+        level=1,
+        max_health=6,
+        current_health=6,
+        strength=6,
+        movement=7,
+        defense=8,
+        intelligence=9,
+        hunger=6,
+        mood=4,
+    ),
+]
+for pet in pets:
+    db.session.add(pet)
+
+
 db.session.commit()

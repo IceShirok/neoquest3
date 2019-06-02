@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Welcome!</h1>
+<p>This site is currently being built by our hired professionally-trained gophers.</p>
+
+<div id="banner" class="columns">
+    <div class="column col-3"></div>
+    <div class="column col-6">
+        <div class="columns">
+            <div class="column col-6">
+                <h1>{{ user.username }} the Explorer</h1>
+            </div>
+            <div class="column col-6">
+            </div>
+        </div>
+        <hr />
+        <h2>Pets</h2>
+        <div class="columns">
+            {% if pets|length > 0 %}
+            {% for pet in pets %}
+            <div class="column col-{{ 12 / pets|length }}">
+                <center>
+                    <a href="{{ url_for('view_pet', name=pet.name) }}">
+                        <img src="{{ pet_desc.generate_image_url(pet.species, pet.color) }}" />
+                    </a>
+                    <h3>{{ pet.name }}</h3>
+                    <p>{{ 'Male' if pet.gender == 1 else 'Female' }} {{ pet.species }}</p>
+                    <p>Age: TBD</p>
+                    <p>Level: {{ pet.level }}</p>
+                </center>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="column col-12">
+                <p>Alas, an empty party!</p>
+            </div>
+            {% endif %}
+        </div>
+        <hr />
+        <h2>Trophies</h2>
+        <div class="columns">
+            <div class="column col-12">
+            </div>
+        </div>
+    </div>
+    <div class="column col-3"></div>
+</div>
+{% endblock %}

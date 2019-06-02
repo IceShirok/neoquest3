@@ -36,8 +36,9 @@ flask run
 
 ```bash
 flask db init
-
-flask db migrate -m "message goes here"
+flask db migrate -m "init"
+flask db upgrade
+python db_init.py
 ```
 
 ## Docker and Kubernetes Deployment
