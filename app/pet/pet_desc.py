@@ -25,6 +25,27 @@ vocation_battle_styles = {
 }
 
 
+def generate_vocation_image_url(vocation='warrior'):
+    vocation_urls = {
+        'warrior': 'http://images.neopets.com/nq2/c/p1f3_3cc40.gif',
+        'mage': 'http://images.neopets.com/nq2/c/p2f3_4056e.gif',
+        'ranger': 'http://images.neopets.com/nq2/c/p3f2_0ad84.gif',
+        'cleric': 'http://images.neopets.com/nq2/c/p4f2_a35ad.gif',
+    }
+    return vocation_urls[vocation]
+
+
+def generate_vocation_item_url(vocation):
+    vocation_urls = {
+        'warrior': 'http://images.neopets.com/items/bd_nq2_apocolypse_sword.gif',
+        'mage': 'http://images.neopets.com/items/bd_nq2_reality_wand.gif',
+        'ranger': 'http://images.neopets.com/items/bd_nq2_destiny_bow.gif',
+        'cleric': 'http://images.neopets.com/items/bd_nq2_fury_staff.gif',
+        None: 'https://items.jellyneo.net/assets/imgs/items/3290.gif?972',
+    }
+    return vocation_urls[vocation]
+
+
 def generate_image_url(species, color, pose=None, position='baby'):
     if not pose:
         return 'http://images.neopets.com/pets/{}_{}_baby.gif'.format(species.lower(), color.lower())

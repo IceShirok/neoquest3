@@ -15,10 +15,13 @@
                         <img src="{{ pet_desc.generate_image_url(pet.species, pet.color) }}" />
                     </a>
                     <h3>{{ pet.name }}</h3>
-                    <p>{{ pet_desc.get_gender_desc(pet.gender) }} {{ pet.species }}</p>
-                    <p>Age: TBD</p>
-                    <p>Level: {{ pet.level }}</p>
                 </center>
+                <ul>
+                    <li>{{ pet_desc.get_gender_desc(pet.gender) }} {{ pet.species }}</li>
+                    <li>Age: TBD</li>
+                    <li>Level: {{ pet.level }}</li>
+                    <li>Vocation: {{ pet.vocation|capitalize }}</li>
+                </ul>
             </div>
             {% endfor %}
             {% else %}

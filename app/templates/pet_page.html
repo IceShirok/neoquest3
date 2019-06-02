@@ -8,6 +8,7 @@
             <div class="column col-6">
                 <h2>{{ pet.name }} the {{ pet.color }} {{ pet.species }}</h2>
                 <img src="{{ pet_desc.generate_image_url(pet.species, pet.color) }}" />
+                <img src="{{ pet_desc.generate_vocation_item_url(pet.vocation) }}" />
             </div>
             <div class="column col-6">
                 <ul>

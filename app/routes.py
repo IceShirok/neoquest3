@@ -66,7 +66,8 @@ def view_vocations():
     print(skills)
     return render_template('training_grounds.html',
                            title='Training Grounds',
-                           skills=skills)
+                           skills=skills,
+                           pet_desc=pet_desc)
 
 
 @app.route('/tavern', methods=['GET', 'POST'])
