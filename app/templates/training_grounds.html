@@ -10,10 +10,11 @@
                 <img src="{{ pet_desc.generate_vocation_image_url(vocation) }}"/>
             </div>
             <div class="column col-6">
+                <h3>Skills</h3>
+                {% for skill in skills[vocation] %}
                 <div class="accordion">
-                    {% for skill in skills[vocation] %}
-                    <input type="checkbox" id="accordion-{{vocation}}_{{skill}}" name="accordion-checkbox" hidden>
-                    <label class="accordion-header" for="accordion-{{vocation}}_{{skill}}">
+                    <input type="checkbox" id="accordion-{{vocation}}-{{pet_desc.code_friendly_string(skill)}}" name="accordion-checkbox" hidden>
+                    <label class="accordion-header" for="accordion-{{vocation}}-{{pet_desc.code_friendly_string(skill)}}">
                         <i class="icon icon-arrow-right mr-1"></i>
                         {{ skill }}
                     </label>
@@ -25,8 +26,8 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    {% endfor %}
                 </div>
+                {% endfor %}
             </div>
         </div>
         {% endfor %}

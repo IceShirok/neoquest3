@@ -25,6 +25,9 @@ vocation_battle_styles = {
 }
 
 
+def code_friendly_string(s):
+    return s.replace(' ', '_')
+
 def generate_vocation_image_url(vocation='warrior'):
     vocation_urls = {
         'warrior': 'http://images.neopets.com/nq2/c/p1f3_3cc40.gif',
