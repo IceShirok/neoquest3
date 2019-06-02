@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="banner" class="columns">
+    <div class="column col-3"></div>
+    <div class="column col-6">
+        <center>
+            <div class="card">
+                <div class="card-image">
+                    <img src="http://images.neopets.com/evil/galem.jpg" class="img-responsive"/>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Hey, I haven't seen you around these parts.
+                        You say you're here for adventure?
+                        Bah, you wouldn't make it five minutes before you're back here crying to me.
+                        Step right in, and don't say I didn't warn you.
+                    </p>
+
+                    <form action="" method="post" novalidate>
+                        {{ form.hidden_tag() }}
+                        <p>
+                            {{ form.username.label }}<br>
+                            {{ form.username(size=32) }}
+                            {% for error in form.username.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                        <p>
+                            {{ form.password.label }}<br>
+                            {{ form.password(size=32) }}
+                            {% for error in form.password.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                        <p>{{ form.submit() }}</p>
+                    </form>
+                </div>
+            </div>
+        </center>
+    </div>
+    <div class="column col-3"></div>
+</div>
+{% endblock %}

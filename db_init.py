@@ -12,8 +12,11 @@ db.engine.execute(sa_text('''DELETE FROM vocation_skill''').execution_options(au
 
 
 users = [
-    User(username='katya', email='katya@example.com'),
-    User(username='arno', email='arno@example.com'),
+    User(id=0,
+         username='katya',
+         email='katya@example.com',  # pw is neopetsrulez
+         password_hash='pbkdf2:sha256:50000$I4PTd3hq$ee3a77959d3ae21521ef4f1729987229144e61212f5afd316302f7545397e925'),
+    User(id=1, username='arno', email='arno@example.com'),
 ]
 for user in users:
     db.session.add(user)
