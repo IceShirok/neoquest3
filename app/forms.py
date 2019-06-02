@@ -6,6 +6,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
 
+from app.pet import pet_desc
+
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -15,17 +17,38 @@ class LoginForm(FlaskForm):
 
 
 class CreatePetForm(FlaskForm):
-    pet_list = [
-        'Acara', 'Aisha', 'Blumaroo', 'Bori', 'Bruce', 'Buzz', 'Chia', 'Chomby', 'Cybunny', 'Draik', 'Elephante',
-        'Eyrie', 'Flotsam', 'Gelert', 'Gnorbu', 'Grarrl', 'Grundo', 'Hissi', 'Ixi', 'Jetsam', 'Jubjub', 'Kacheek',
-        'Kau', 'Kiko', 'Koi', 'Korbat', 'Kougra', 'Krawk', 'Kyrii', 'Lenny', 'Lupe', 'Lutari', 'Meerca', 'Moehog',
-        'Mynci', 'Nimmo', 'Ogrin', 'Peophin', 'Poogle', 'Pteri', 'Quiggle', 'Ruki', 'Scorchio', 'Shoyru', 'Skeith',
-        'Techo', 'Tonu', 'Tuskaninny', 'Uni', 'Usul', 'Wocky', 'Xweetok', 'Yurble', 'Zafara',
+    pet_list_form = [
+        ('Acara', 'Acara'),
+        ('Aisha', 'Aisha'),
+        ('Blumaroo', 'Blumaroo'),
+        ('Cybunny', 'Cybunny'),
+        ('Draik', 'Draik'),
+        ('Eyrie', 'Eyrie'),
+        ('Gelert', 'Gelert'),
+        ('Ixi', 'Ixi'),
+        ('Jubjub', 'Jubjub'),
+        ('Kacheek', 'Kacheek'),
+        ('Kau', 'Kau'),
+        ('Korbat', 'Korbat'),
+        ('Kougra', 'Kougra'),
+        ('Kyrii', 'Kyrii'),
+        ('Lupe', 'Lupe'),
+        ('Moehog', 'Moehog'),
+        ('Nimmo', 'Nimmo'),
+        ('Poogle', 'Poogle'),
+        ('Quiggle', 'Quiggle'),
+        ('Scorchio', 'Scorchio'),
+        ('Shoyru', 'Shoyru'),
+        ('Techo', 'Techo'),
+        ('Uni', 'Uni'),
+        ('Wocky', 'Wocky'),
+        ('Xweetok', 'Xweetok'),
+        ('Yurble', 'Yurble'),
+        ('Zafara', 'Zafara'),
     ]
-    pet_list_form = map(lambda p: (p, p), pet_list)
     name = StringField('Name', validators=[DataRequired()])
     species = SelectField('Species', choices=pet_list_form, validators=[DataRequired()])
     color = SelectField('Color', choices=[('Red', 'Red'), ('Yellow', 'Yellow'), ('Green', 'Green'), ('Blue', 'Blue')], validators=[DataRequired()])
-    gender = SelectField('Gender', choices=[(0, 'Female'), (1, 'Male')], validators=[DataRequired()])
+    gender = SelectField('Gender', choices=[(0, 'Female'), (1, 'Male')], coerce=pet_desc.gender_desc_to_val, validators=[DataRequired()])
 
     submit = SubmitField('Hire a New Adventurer!')

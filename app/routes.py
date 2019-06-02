@@ -80,7 +80,11 @@ def view_tavern():
 def view_pet_creation():
     form = CreatePetForm()
     if form.validate_on_submit():
-        flash('Pet creation : name {}'.format(form.name.data))
+        pet_name = form.name.data
+        if Pet.query.filter_by(name=pet_name).first():
+            flash('Pet name {} already exists!'.format(pet_name))
+            return redirect(url_for('view_pet_creation'))
+        flash('Pet creation : name {}'.format(pet_name))
         return redirect(url_for('index'))
     return render_template('guild.html',
                            title="Adventurers' Guild",

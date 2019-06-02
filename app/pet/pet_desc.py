@@ -20,6 +20,10 @@ def get_gender_desc(val):
     return 'Male' if val else 'Female'
 
 
+def gender_desc_to_val(val):
+    return 1 if val == 'Male' else 'Female'
+
+
 def get_strength_desc(val):
     if 1 <= val <= 1:
         return "Pathetic"
