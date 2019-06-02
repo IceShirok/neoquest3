@@ -14,7 +14,7 @@
             </div>
             <div class="column col-6">
                 <ul>
-                    <li>Owner: <strong><a href="{{ url_for('view_user', name=pet.owner) }}">{{ user.username }}</a></strong></li>
+                    <li>Owner: <strong><a href="{{ url_for('view_user', name=pet.owner) }}">{{ pet.owner }}</a></strong></li>
                     <li>Gender: <strong>{{ pet.gender }}</strong></li>
                     <li>Age: <strong>TBD</strong></li>
                     <li>Level: <strong>{{ pet_desc.get_level_desc(pet.level) }}</strong></li>
