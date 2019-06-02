@@ -6,12 +6,19 @@ Tinkering with tech to create a full-scale game based on Neoquest.
 
 Yes, the tech I'll be throwing at this will be super overengineering. The project's main goal is for me to learn how to use these tools for larger-scale projects; not necessarily to make this efficient off the bat.
 
-* Have a database with fance stuff
-* Create a model
-* Run it on Docker/Kuubernetes
+* basic goals
+    * ~~Have a database with fance stuff~~
+    * Create a model
+    * ~~Run it on Docker/Kubernetes~~
+    * also add a cache
 * Create microservices
+    * Segregate APIs and webpage generation
+    * Figure out how to set up a project that can deploy multiple Docker images
+    * Figure out how to add service discovery to the application
 * have you, as a pet, interact with the world
-* also add a cache
+    * Create a world like a map, party goes from pt A to pt B and has different shops and whatnot
+    * Fully integrate vocation to the pet class, have the user act like an adventurer trainer
+    * "active pet" acts like the leader of the party, skills can be used to interact
 
 ## References
 
