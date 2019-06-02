@@ -25,7 +25,7 @@
                         <img src="{{ pet_desc.generate_image_url(pet.species, pet.color) }}" />
                     </a>
                     <h3>{{ pet.name }}</h3>
-                    <p>{{ 'Male' if pet.gender == 1 else 'Female' }} {{ pet.species }}</p>
+                    <p>{{ pet_desc.get_gender_desc(pet.gender) }} {{ pet.species }}</p>
                     <p>Age: TBD</p>
                     <p>Level: {{ pet.level }}</p>
                 </center>
@@ -41,6 +41,18 @@
         <h2>Trophies</h2>
         <div class="columns">
             <div class="column col-12">
+                {% if pets|length > 0 %}
+                {% for pet in pets %}
+                <div class="card float-left">
+                    <div class="card-image">
+                    <img src="http://images.neopets.com/trophies/372_1.gif" class="img-responsive">
+                    </div>
+                    <div class="card-header">
+                        <div class="card-title h5">Pro Adventurer</div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

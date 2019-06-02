@@ -16,6 +16,10 @@ def get_level_desc(val):
         return "Too High to Count"
 
 
+def get_gender_desc(val):
+    return 'Male' if val else 'Female'
+
+
 def get_strength_desc(val):
     if 1 <= val <= 1:
         return "Pathetic"
