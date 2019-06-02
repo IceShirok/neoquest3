@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="banner" class="columns">
+    <div class="column col-12">
+        {% for vocation in skills %}
+        <h2>{{ vocation|capitalize }}</h2>
+        <div class="accordion">
+            {% for skill in skills[vocation] %}
+            <input type="checkbox" id="accordion-{{vocation}}_{{skill}}" name="accordion-checkbox" hidden>
+            <label class="accordion-header" for="accordion-{{vocation}}_{{skill}}">
+                <i class="icon icon-arrow-right mr-1"></i>
+                {{ skill }}
+            </label>
+            <div class="accordion-body">
+                <p>{{ skills[vocation][skill]['description'] }}</p>
+                <ul>
+                    {% for level in skills[vocation][skill]['levels'] %}
+                    <li>{{ level }} - {{ skills[vocation][skill]['levels'][level] }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

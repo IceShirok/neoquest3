@@ -1,9 +1,11 @@
+import json
+
 from flask import render_template, url_for, flash
 from werkzeug.utils import redirect
 
 from app import app
 from app.forms import CreatePetForm
-from app.models import User, Pet
+from app.models import User, Pet, VocationSkill
 from app.pet import pet_desc
 
 
@@ -11,6 +13,31 @@ from app.pet import pet_desc
 def index():
     return render_template('index.html',
                            title='NeoQuest Portal')
+
+
+@app.route('/training')
+def view_vocations():
+    skills_raw = VocationSkill.query.all()
+    skills = {}
+    for skill in skills_raw:
+        if skill.vocation not in skills:
+            skills[skill.vocation] = {}
+        vocation_skills = skills[skill.vocation]
+        if skill.skill_name not in skills[skill.vocation]:
+            vocation_skills[skill.skill_name] = {}
+        vocation_skill = vocation_skills[skill.skill_name]
+        vocation_skill['description'] = skill.description
+        vocation_skill['vocation'] = skill.vocation
+        if 'levels' not in vocation_skill:
+            vocation_skill['levels'] = {}
+        vocation_skill['levels'][skill.level] = skill.skill_level_name
+
+        vocation_skills[skill.skill_name] = vocation_skill
+        skills[skill.vocation] = vocation_skills
+    print(skills)
+    return render_template('training_grounds.html',
+                           title='Training Grounds',
+                           skills=skills)
 
 
 @app.route('/guild', methods=['GET', 'POST'])

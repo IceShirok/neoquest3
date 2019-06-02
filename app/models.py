@@ -1,3 +1,5 @@
+from sqlalchemy import UniqueConstraint
+
 from app import db
 
 
@@ -28,3 +30,14 @@ class Pet(db.Model):
 
     def __repr__(self):
         return '<id={}, name={}>'.format(self.id, self.name)
+
+
+class VocationSkill(db.Model):
+    __table_args__ = (
+        UniqueConstraint("skill_name", "level", "vocation"),
+    )
+    skill_name = db.Column(db.String(64), index=True, primary_key=True)
+    level = db.Column(db.Integer(), index=True, primary_key=True)
+    vocation = db.Column(db.String(64), index=True, primary_key=True)
+    skill_level_name = db.Column(db.String(64), index=True)
+    description = db.Column(db.String(256))

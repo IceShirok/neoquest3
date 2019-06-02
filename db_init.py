@@ -1,11 +1,14 @@
+import json
+
 from app import app, db
-from app.models import User, Pet
+from app.models import User, Pet, VocationSkill
 
 from sqlalchemy.sql import text as sa_text
 
 
 db.engine.execute(sa_text('''DELETE FROM user''').execution_options(autocommit=True))
 db.engine.execute(sa_text('''DELETE FROM pet''').execution_options(autocommit=True))
+db.engine.execute(sa_text('''DELETE FROM vocation_skill''').execution_options(autocommit=True))
 
 
 users = [
@@ -67,6 +70,21 @@ pets = [
 ]
 for pet in pets:
     db.session.add(pet)
+
+
+with open('data/skills.json') as f:
+    skills_r = f.readlines()
+    for skill in skills_r:
+        skill_j = json.loads(skill)
+        for level in skill_j['levels']:
+            skill_db = VocationSkill(
+                skill_name=skill_j['name'],
+                level=int(level),
+                skill_level_name=skill_j['levels'][level],
+                vocation=skill_j['type'],
+                description=skill_j['desc']
+            )
+            db.session.add(skill_db)
 
 
 db.session.commit()
