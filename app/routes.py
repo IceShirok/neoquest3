@@ -1,7 +1,8 @@
-from flask import render_template, url_for
+from flask import render_template, url_for, flash
 from werkzeug.utils import redirect
 
 from app import app
+from app.forms import CreatePetForm
 from app.models import User, Pet
 from app.pet import pet_desc
 
@@ -10,6 +11,17 @@ from app.pet import pet_desc
 def index():
     return render_template('index.html',
                            title='NeoQuest Portal')
+
+
+@app.route('/guild', methods=['GET', 'POST'])
+def view_pet_creation():
+    form = CreatePetForm()
+    if form.validate_on_submit():
+        flash('Pet creation : name {}'.format(form.name.data))
+        return redirect(url_for('index'))
+    return render_template('guild.html',
+                           title="Adventurers' Guild",
+                           form=form)
 
 
 @app.route('/user/<string:name>')
