@@ -70,6 +70,12 @@ def view_vocations():
                            skills=skills)
 
 
+@app.route('/tavern', methods=['GET', 'POST'])
+def view_tavern():
+    return render_template('tavern.html',
+                           title="The Tavern")
+
+
 @app.route('/guild', methods=['GET', 'POST'])
 def view_pet_creation():
     form = CreatePetForm()
@@ -79,6 +85,11 @@ def view_pet_creation():
     return render_template('guild.html',
                            title="Adventurers' Guild",
                            form=form)
+
+
+@app.route('/party')
+def view_my_pets():
+    return redirect(url_for('view_user', name=current_user.username))
 
 
 @app.route('/user/<string:name>')
