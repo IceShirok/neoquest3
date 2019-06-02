@@ -14,22 +14,31 @@
 <body>
     <div id="header">
         <h1>NeoQuest 3 ::: {{ title }}</h1>
-        <header class="navbar">
-            <section class="navbar-section">
-                <div class="dropdown">
-                    <!-- menu component -->
-                    <ul class="menu">
-                        Coming soon!
-                    </ul>
-                </div>
-            </section>
-            <section class="navbar-center">
-            </section>
-            <section class="navbar-section"></section>
-        </header>
+        <p>This site is currently being built by our hired professionally-trained gophers.</p>
     </div>
     <div class="container">
-        {% block content %}{% endblock %}
+        <div class="columns">
+            <div class="column col-2">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a href="{{ url_for('view_pet_creation') }}"><i class="material-icons">local_pizza</i> Tavern</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#"><i class="material-icons">dashboard</i> Boards</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#"><i class="material-icons">casino</i> Rumors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#"><i class="material-icons">help_outline</i> Help</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="column col-8">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="column col-2"></div>
+        </div>
     </div>
     <div id="footer">
         <p>Created for the love of Neopets and tech.</p>
