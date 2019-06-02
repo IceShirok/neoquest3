@@ -17,11 +17,24 @@ pet_positions = {
 }
 
 
+vocation_battle_styles = {
+    'warrior': 'closeattack',
+    'mage': 'rangedattack',
+    'ranger': 'rangedattack',
+    'cleric': 'closeattack',
+}
+
+
 def generate_image_url(species, color, pose=None, position='baby'):
     if not pose:
         return 'http://images.neopets.com/pets/{}_{}_baby.gif'.format(species.lower(), color.lower())
     else:
         return 'http://images.neopets.com/pets/{}/{}_{}_{}.gif'.format(pose, species.lower(), color.lower(), position)
+
+
+def generate_battle_image_url(species, color, vocation, position='right'):
+    battle_pose = vocation_battle_styles[vocation] if vocation else 'closeattack'
+    return generate_image_url(species, color, pose=battle_pose, position=position)
 
 
 def get_level_desc(val):
@@ -42,7 +55,7 @@ def get_gender_desc(val):
 
 
 def gender_desc_to_val(val):
-    return 1 if val == 'Male' else 'Female'
+    return 1 if val == 'Male' else 0
 
 
 def get_strength_desc(val):

@@ -37,6 +37,7 @@ pets = [
         intelligence=11,
         hunger=6,
         mood=4,
+        vocation=None,
     ),
     Pet(
         name='Devon',
@@ -53,6 +54,7 @@ pets = [
         intelligence=9,
         hunger=6,
         mood=4,
+        vocation=None,
     ),
     Pet(
         name='Katya',
@@ -69,6 +71,7 @@ pets = [
         intelligence=9,
         hunger=6,
         mood=4,
+        vocation=None,
     ),
 ]
 for pet in pets:

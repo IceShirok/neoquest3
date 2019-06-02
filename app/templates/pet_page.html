@@ -15,6 +15,7 @@
                     <li>Gender: <strong>{{ pet_desc.get_gender_desc(pet.gender) }}</strong></li>
                     <li>Age: <strong>TBD</strong></li>
                     <li>Level: <strong>{{ pet_desc.get_level_desc(pet.level) }}</strong></li>
+                    <li>Vocation: <strong>{{ pet.vocation|capitalize }}</strong></li>
                     <li>Health: <strong>{{ pet.current_health }} / {{ pet.max_health }}</strong></li>
                     <li>Mood: <strong>{{ pet_desc.get_mood_desc(pet.mood) }}</strong></li>
                     <li>Hunger: <strong>{{ pet_desc.get_hunger_desc(pet.hunger) }}</strong></li>
@@ -27,7 +28,7 @@
         </div>
         <hr />
         <div>
-            <img src="{{ pet_desc.generate_image_url(pet.species, pet.color, pose='closeattack', position='right') }}" />
+            <img src="{{ pet_desc.generate_battle_image_url(pet.species, pet.color, pet.vocation) }}" />
             <p>Challenge {{ pet.name }} to a duel in the battledome!</p>
         </div>
     </div>

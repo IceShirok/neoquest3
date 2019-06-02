@@ -42,6 +42,7 @@ class Pet(db.Model):
     intelligence = db.Column(db.Integer())
     hunger = db.Column(db.Integer())
     mood = db.Column(db.Integer())
+    vocation = db.Column(db.String(64))
 
     def __repr__(self):
         return '<id={}, name={}>'.format(self.id, self.name)

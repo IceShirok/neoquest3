@@ -39,14 +39,23 @@
             <p>
                 {{ form.species.label }}<br>
                 {{ form.species }}
+                {% for error in form.species.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
             </p>
             <p>
                 {{ form.color.label }}<br>
                 {{ form.color }}
+                {% for error in form.color.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
             </p>
             <p>
                 {{ form.gender.label }}<br>
                 {{ form.gender }}
+                {% for error in form.gender.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
             </p>
             <p>{{ form.submit() }}</p>
         </form>

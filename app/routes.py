@@ -80,7 +80,7 @@ def view_tavern():
 @login_required
 def view_pet_creation():
     pets = get_pets_by_user(current_user.username)
-    if len(pets) > 4:
+    if len(pets) >= 4:
         form = None
     else:
         form = CreatePetForm()
@@ -89,6 +89,25 @@ def view_pet_creation():
             if Pet.query.filter_by(name=pet_name).first():
                 flash('Pet name {} already exists!'.format(pet_name))
                 return redirect(url_for('view_pet_creation'))
+            pet = Pet(
+                name=form.name.data,
+                owner=current_user.username,
+                species=form.species.data,
+                color=form.color.data,
+                gender=form.gender.data,
+                level=1,
+                max_health=6,
+                current_health=6,
+                strength=5,
+                movement=7,
+                defense=8,
+                intelligence=11,
+                hunger=6,
+                mood=4,
+                vocation=None
+            )
+            db.session.add(pet)
+            db.session.commit()
             flash('Pet creation : name {}'.format(pet_name))
             return redirect(url_for('view_my_pets'))
     return render_template('guild.html',

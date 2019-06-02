@@ -49,6 +49,6 @@ class CreatePetForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     species = SelectField('Species', choices=pet_list_form, validators=[DataRequired()])
     color = SelectField('Color', choices=[('Red', 'Red'), ('Yellow', 'Yellow'), ('Green', 'Green'), ('Blue', 'Blue')], validators=[DataRequired()])
-    gender = SelectField('Gender', choices=[(0, 'Female'), (1, 'Male')], coerce=pet_desc.gender_desc_to_val, validators=[DataRequired()])
+    gender = SelectField('Gender', choices=[(0, 'Female'), (1, 'Male')], coerce=pet_desc.gender_desc_to_val)
 
     submit = SubmitField('Hire a New Adventurer!')
