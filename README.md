@@ -15,10 +15,18 @@ Yes, the tech I'll be throwing at this will be super overengineering. The projec
 
 ## References
 
+Color schemes: 
+* D53745
+* F6F0A7
+* C1CF57
+* 798C42
+* 574935
+
 * ooh it'd be fun to make it like Tir-Nan-Og
 * https://idnq.net/
 * http://thedailyneopets.com/articles/status-titles/
 * http://www.oocities.org/neoquest_2/skills.html
+* https://gist.github.com/temoto/ac4088528bc99c768468
 
 ## Web Application
 The web application currently serves as a testing ground to view the PC model in a web browser.
