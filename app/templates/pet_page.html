@@ -26,7 +26,10 @@
             </div>
         </div>
         <hr />
-        <p>Challenge {{ pet.name }} to a duel in the battledome!</p>
+        <div>
+            <img src="{{ pet_desc.generate_image_url(pet.species, pet.color, pose='closeattack', position='right') }}" />
+            <p>Challenge {{ pet.name }} to a duel in the battledome!</p>
+        </div>
     </div>
     <div class="column col-3"></div>
 </div>

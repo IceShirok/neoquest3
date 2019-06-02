@@ -5,12 +5,8 @@
     <div class="column col-12">
         <div>
             <p>
-                Heh, so it looks like someone in the party's not the right fit, eh?
-                Luckily, I have just what you need to make sure people don't get
-                funny ideas about their disappearance. But just to warn ye, if you
-                have other funny ideas about exiling someone else, you'll have to
-                wait a little while before you can try again. I don't want ye or
-                meself to become suspects.
+                Hey friend, looks like you could use some extra spice to your party.
+                We have some folks who are itching to join a party.
             </p>
         </div>
         <div class="columns">
@@ -18,8 +14,8 @@
             {% for pet in pets %}
             <div class="column col-{{ 12 / pets|length }}">
                 <center>
-                    <a href="{{ url_for('exile_pet', name=pet.name) }}">
-                        <img src="{{ pet_desc.generate_image_url(pet.species, pet.color, 'sad') }}" />
+                    <a href="{{ url_for('recruit_pet', name=pet.name) }}">
+                        <img src="{{ pet_desc.generate_image_url(pet.species, pet.color) }}" />
                     </a>
                     <h3>{{ pet.name }}</h3>
                     <p>{{ pet_desc.get_gender_desc(pet.gender) }} {{ pet.species }}</p>

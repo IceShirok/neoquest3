@@ -4,7 +4,7 @@ from flask import render_template, url_for, flash, request
 from werkzeug.urls import url_parse
 from werkzeug.utils import redirect
 
-from app import app
+from app import app, db
 from app.forms import CreatePetForm, LoginForm
 from app.models import User, Pet, VocationSkill
 from app.pet import pet_desc
@@ -106,6 +106,43 @@ def view_pet_exile():
                            title="Black Market",
                            pets=pets,
                            pet_desc=pet_desc)
+
+
+@app.route('/exile/pet/<string:name>')
+def exile_pet(name):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    pet = Pet.query.filter_by(name=name, owner=current_user.username).first()
+    if not pet:
+        flash('You can only exile your own pets!')
+    else:
+        pet.owner = None
+        db.session.commit()
+    return redirect(url_for('view_my_pets'))
+
+
+@app.route('/veterans')
+def view_pet_veterans():
+    pets = Pet.query.filter_by(owner=None).all()
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    return render_template('veterans.html',
+                           title="Black Market",
+                           pets=pets,
+                           pet_desc=pet_desc)
+
+
+@app.route('/recruit/pet/<string:name>')
+def recruit_pet(name):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    pet = Pet.query.filter_by(name=name, owner=None).first()
+    if not pet:
+        flash('You can only recruit a pet without an owner!')
+    else:
+        pet.owner = current_user.username
+        db.session.commit()
+    return redirect(url_for('view_my_pets'))
 
 
 @app.route('/party')
