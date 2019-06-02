@@ -11,6 +11,13 @@
     </div>
     <div class="column col-6">
         <h1>Hire a New Adventurer</h1>
+        {% if not form %}
+        <p>
+            Alas, my friend, it looks like you have a full party!
+            Too many cooks in the kitchen spoils the broth - or at least
+            that's what Olag says.
+        </p>
+        {% else %}
         <form action="" method="post" novalidate>
             {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -43,6 +50,7 @@
             </p>
             <p>{{ form.submit() }}</p>
         </form>
+        {% endif %}
     </div>
     <div class="column col-3"></div>
 </div>

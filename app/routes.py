@@ -78,14 +78,20 @@ def view_tavern():
 
 @app.route('/guild', methods=['GET', 'POST'])
 def view_pet_creation():
-    form = CreatePetForm()
-    if form.validate_on_submit():
-        pet_name = form.name.data
-        if Pet.query.filter_by(name=pet_name).first():
-            flash('Pet name {} already exists!'.format(pet_name))
-            return redirect(url_for('view_pet_creation'))
-        flash('Pet creation : name {}'.format(pet_name))
-        return redirect(url_for('index'))
+    pets = get_pets_by_user(current_user.username)
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    elif len(pets) > 4:
+        form = None
+    else:
+        form = CreatePetForm()
+        if form.validate_on_submit():
+            pet_name = form.name.data
+            if Pet.query.filter_by(name=pet_name).first():
+                flash('Pet name {} already exists!'.format(pet_name))
+                return redirect(url_for('view_pet_creation'))
+            flash('Pet creation : name {}'.format(pet_name))
+            return redirect(url_for('view_my_pets'))
     return render_template('guild.html',
                            title="Adventurers' Guild",
                            form=form)
@@ -119,7 +125,7 @@ def get_pets_by_user(username):
     return pets_list
 
 
-@app.route('/pet/<string:name>')
+@app.route('/pet/<string:name>', methods=['GET'])
 def view_pet(name):
     pet = Pet.query.filter_by(name=name).first_or_404()
 
