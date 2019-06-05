@@ -1,7 +1,7 @@
 import json
 
 from app import app, db
-from app.models import User, Pet, VocationSkill
+from app.models import User, Pet, VocationSkill, PetSkills
 
 from sqlalchemy.sql import text as sa_text
 
@@ -9,6 +9,7 @@ from sqlalchemy.sql import text as sa_text
 db.engine.execute(sa_text('''DELETE FROM user''').execution_options(autocommit=True))
 db.engine.execute(sa_text('''DELETE FROM pet''').execution_options(autocommit=True))
 db.engine.execute(sa_text('''DELETE FROM vocation_skill''').execution_options(autocommit=True))
+db.engine.execute(sa_text('''DELETE FROM pet_skills''').execution_options(autocommit=True))
 
 
 def create_basic():
@@ -120,10 +121,20 @@ def create_with_full_party():
     for pet in pets:
         db.session.add(pet)
 
-    Pet.query.filter_by(name='Wulgar', owner='katya').first().vocation = 'mage'
-    Pet.query.filter_by(name='Devon', owner='katya').first().vocation = 'warrior'
-    Pet.query.filter_by(name='Katya', owner='katya').first().vocation = 'cleric'
-    Pet.query.filter_by(name='Hilga', owner='katya').first().vocation = 'ranger'
+    pet_to_vocation = [
+        ('Wulgar', 'mage'),
+        ('Devon', 'warrior'),
+        ('Katya', 'cleric'),
+        ('Hilga', 'ranger'),
+    ]
+
+    for pet, vocation in pet_to_vocation:
+        Pet.query.filter_by(name=pet, owner='katya').first().vocation = vocation
+        skills = VocationSkill.query.filter_by(vocation=vocation, level=1).all()
+        for skill in skills:
+            db.session.add(
+                PetSkills(pet_name=pet, skill_name=skill.skill_name, vocation=skill.vocation, level=skill.level)
+            )
 
     db.session.commit()
 

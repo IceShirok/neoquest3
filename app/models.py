@@ -48,6 +48,13 @@ class Pet(db.Model):
         return '<id={}, name={}>'.format(self.id, self.name)
 
 
+class PetSkills(db.Model):
+    pet_name = db.Column(db.String(64), primary_key=True)
+    vocation = db.Column(db.String(64), index=True, primary_key=True)
+    skill_name = db.Column(db.String(64), index=True, primary_key=True)
+    level = db.Column(db.Integer())
+
+
 class VocationSkill(db.Model):
     __table_args__ = (
         UniqueConstraint("skill_name", "level", "vocation"),

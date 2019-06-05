@@ -6,7 +6,7 @@ from werkzeug.utils import redirect
 
 from app import app, db
 from app.forms import CreatePetForm, LoginForm
-from app.models import User, Pet, VocationSkill
+from app.models import User, Pet, VocationSkill, PetSkills
 from app.pet import pet_desc
 
 from flask_login import current_user, login_user, login_required
@@ -195,7 +195,13 @@ def get_pets_by_user(username):
 def view_pet(name):
     pet = Pet.query.filter_by(name=name).first_or_404()
 
+    skills = list()
+    pet_skills = PetSkills.query.filter_by(pet_name=name).all()
+    for skill in skills:
+        skills.append(skill)
+
     return render_template('pet_page.html',
                            title='Pet Page',
                            pet=pet,
+                           pet_skills=pet_skills,
                            pet_desc=pet_desc)
