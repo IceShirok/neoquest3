@@ -19,6 +19,7 @@ Yes, the tech I'll be throwing at this will be super overengineering. The projec
     * Create a world like a map, party goes from pt A to pt B and has different shops and whatnot
     * Fully integrate vocation to the pet class, have the user act like an adventurer trainer
     * "active pet" acts like the leader of the party, skills can be used to interact
+    * ooh adding procedural generation would be super coo: http://pcg.wikidot.com/category-pcg-algorithms
 
 ## References
 
