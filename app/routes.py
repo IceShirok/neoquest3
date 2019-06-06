@@ -1,6 +1,7 @@
 import json
 
 from flask import render_template, url_for, flash, request
+from sqlalchemy import select
 from werkzeug.urls import url_parse
 from werkzeug.utils import redirect
 
@@ -195,10 +196,13 @@ def get_pets_by_user(username):
 def view_pet(name):
     pet = Pet.query.filter_by(name=name).first_or_404()
 
-    skills = list()
-    pet_skills = PetSkills.query.filter_by(pet_name=name).all()
-    for skill in skills:
-        skills.append(skill)
+    pet_skills = list()
+    s = select([PetSkills.vocation, PetSkills.skill_name, PetSkills.level, VocationSkill.skill_level_name]) \
+        .where(PetSkills.pet_name == name) \
+        .where(VocationSkill.skill_name == PetSkills.skill_name) \
+        .where(VocationSkill.level == PetSkills.level)
+    for row in db.session.execute(s):
+        pet_skills.append(row)
 
     return render_template('pet_page.html',
                            title='Pet Page',

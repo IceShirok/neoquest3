@@ -29,13 +29,13 @@
         </div>
         <hr />
         <div>
-            <ul>
-                {% for skill in pet_skills %}
-                <li>{{ skill.skill_name }} {{ skill.level }}</li>
-                {% endfor %}
-            </ul>
             <img src="{{ pet_desc.generate_battle_image_url(pet.species, pet.color, pet.vocation) }}" />
             <p>Challenge {{ pet.name }} to a duel in the battledome!</p>
+            <ul>
+                {% for skill in pet_skills %}
+                <li>{{ skill.skill_level_name }} ({{ skill.skill_name }} {{ skill.level }})</li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
     <div class="column col-3"></div>
