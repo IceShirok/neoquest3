@@ -1,13 +1,14 @@
 import json
 
 from app import app, db
-from app.models import User, Pet, VocationSkill, PetSkills
+from app.models import User, Pet, VocationSkill, PetSkills, PetOwnership
 
 from sqlalchemy.sql import text as sa_text
 
 
 db.engine.execute(sa_text('''DELETE FROM user''').execution_options(autocommit=True))
 db.engine.execute(sa_text('''DELETE FROM pet''').execution_options(autocommit=True))
+db.engine.execute(sa_text('''DELETE FROM pet_ownership''').execution_options(autocommit=True))
 db.engine.execute(sa_text('''DELETE FROM vocation_skill''').execution_options(autocommit=True))
 db.engine.execute(sa_text('''DELETE FROM pet_skills''').execution_options(autocommit=True))
 
@@ -26,7 +27,6 @@ def create_basic():
     pets = [
         Pet(
             name='Wulgar',
-            owner='katya',
             species='Lupe',
             color='Yellow',
             gender=1,
@@ -43,7 +43,6 @@ def create_basic():
         ),
         Pet(
             name='Devon',
-            owner='katya',
             species='Techo',
             color='Shadow',
             gender=1,
@@ -60,7 +59,6 @@ def create_basic():
         ),
         Pet(
             name='Katya',
-            owner='katya',
             species='Cybunny',
             color='Blue',
             gender=0,
@@ -78,6 +76,7 @@ def create_basic():
     ]
     for pet in pets:
         db.session.add(pet)
+        db.session.add(PetOwnership(pet_name=pet.name, username='katya', is_active_pet=(pet.name == 'Wulgar')))
 
     with open('data/skills.json') as f:
         skills_r = f.readlines()
@@ -102,7 +101,6 @@ def create_with_full_party():
     pets = [
         Pet(
             name='Hilga',
-            owner='katya',
             species='Moehog',
             color='Green',
             gender=0,
@@ -120,6 +118,7 @@ def create_with_full_party():
     ]
     for pet in pets:
         db.session.add(pet)
+        db.session.add(PetOwnership(pet_name=pet.name, username='katya', is_active_pet=(pet.name == 'Wulgar')))
 
     pet_to_vocation = [
         ('Wulgar', 'mage'),
@@ -129,7 +128,7 @@ def create_with_full_party():
     ]
 
     for pet, vocation in pet_to_vocation:
-        Pet.query.filter_by(name=pet, owner='katya').first().vocation = vocation
+        Pet.query.filter_by(name=pet).first().vocation = vocation
         skills = VocationSkill.query.filter_by(vocation=vocation, level=1).all()
         for skill in skills:
             db.session.add(

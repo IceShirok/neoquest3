@@ -7,7 +7,7 @@ from werkzeug.utils import redirect
 
 from app import app, db
 from app.forms import CreatePetForm, LoginForm
-from app.models import User, Pet, VocationSkill, PetSkills
+from app.models import User, Pet, VocationSkill, PetSkills, PetOwnership
 from app.pet import pet_desc
 
 from flask_login import current_user, login_user, login_required
@@ -93,7 +93,6 @@ def view_pet_creation():
                 return redirect(url_for('view_pet_creation'))
             pet = Pet(
                 name=form.name.data,
-                owner=current_user.username,
                 species=form.species.data,
                 color=form.color.data,
                 gender=form.gender.data,
@@ -109,6 +108,7 @@ def view_pet_creation():
                 vocation=None
             )
             db.session.add(pet)
+            db.session.add(PetOwnership(pet_name=form.name.data, username=current_user.username, is_active_pet=False))
             db.session.commit()
             flash('Pet creation : name {}'.format(pet_name))
             return redirect(url_for('view_my_pets'))
@@ -131,11 +131,17 @@ def view_pet_exile():
 def exile_pet(name):
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
-    pet = Pet.query.filter_by(name=name, owner=current_user.username).first()
-    if not pet:
+    relationship = PetOwnership.query.filter_by(pet_name=name, username=current_user.username).first()
+    if not relationship:
         flash('You can only exile your own pets!')
     else:
-        pet.owner = None
+        if relationship.is_active_pet:
+            remaining_pets = PetOwnership.query.filter_by(username=current_user.username).all()
+            if len(remaining_pets) > 0:
+                remaining_pets[0].is_active_pet = True
+
+        relationship = PetOwnership.query.filter_by(pet_name=name, username=current_user.username).first()
+        relationship.username = None
         db.session.commit()
     return redirect(url_for('view_my_pets'))
 
@@ -143,7 +149,12 @@ def exile_pet(name):
 @app.route('/veterans')
 @login_required
 def view_pet_veterans():
-    pets = Pet.query.filter_by(owner=None).all()
+    pets = select([Pet, PetOwnership.username, PetOwnership.is_active_pet]) \
+        .where(Pet.name == PetOwnership.pet_name) \
+        .where(PetOwnership.username == None)
+    pets = db.session.execute(pets).fetchall()
+    for p in pets:
+        print(p)
     return render_template('veterans.html',
                            title="Black Market",
                            pets=pets,
@@ -154,11 +165,12 @@ def view_pet_veterans():
 def recruit_pet(name):
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
-    pet = Pet.query.filter_by(name=name, owner=None).first()
-    if not pet:
+    relationship = PetOwnership.query.filter_by(pet_name=name, username=None).first()
+
+    if not relationship:
         flash('You can only recruit a pet without an owner!')
     else:
-        pet.owner = current_user.username
+        relationship.username = current_user.username
         db.session.commit()
     return redirect(url_for('view_my_pets'))
 
@@ -185,7 +197,10 @@ def view_user(name):
 def get_pets_by_user(username):
     pets_list = list()
 
-    pets = Pet.query.filter_by(owner=username).all()
+    pets = select([Pet, PetOwnership.username, PetOwnership.is_active_pet]) \
+        .where(Pet.name == PetOwnership.pet_name) \
+        .where(PetOwnership.username == username)
+    pets = db.session.execute(pets).fetchall()
     for pet in pets:
         pets_list.append(pet)
 
@@ -194,7 +209,10 @@ def get_pets_by_user(username):
 
 @app.route('/pet/<string:name>', methods=['GET'])
 def view_pet(name):
-    pet = Pet.query.filter_by(name=name).first_or_404()
+    pet = select([Pet, PetOwnership.username, PetOwnership.is_active_pet]) \
+        .where(Pet.name == PetOwnership.pet_name) \
+        .where(Pet.name == name)
+    pet = db.session.execute(pet).fetchone()
 
     pet_skills = list()
     s = select([PetSkills.vocation, PetSkills.skill_name, PetSkills.level, VocationSkill.skill_level_name]) \

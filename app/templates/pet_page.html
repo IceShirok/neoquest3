@@ -6,31 +6,31 @@
     <div class="column col-6">
         <div class="columns">
             <div class="column col-6">
-                <h2>{{ pet.name }} the {{ pet.color }} {{ pet.species }}</h2>
-                <img src="{{ pet_desc.generate_image_url(pet.species, pet.color) }}" />
-                <img src="{{ pet_desc.generate_vocation_item_url(pet.vocation) }}" />
+                <h2>{{ pet['name'] }} the {{ pet['color'] }} {{ pet['species'] }}</h2>
+                <img src="{{ pet_desc.generate_image_url(pet['species'], pet['color']) }}" />
+                <img src="{{ pet_desc.generate_vocation_item_url(pet['vocation']) }}" />
             </div>
             <div class="column col-6">
                 <ul>
-                    <li>Owner: <strong><a href="{{ url_for('view_user', name=pet.owner) }}">{{ pet.owner }}</a></strong></li>
-                    <li>Gender: <strong>{{ pet_desc.get_gender_desc(pet.gender) }}</strong></li>
+                    <li>Owner: <strong><a href="{{ url_for('view_user', name=pet['username']) }}">{{ pet['username'] }}</a></strong></li>
+                    <li>Gender: <strong>{{ pet_desc.get_gender_desc(pet['gender']) }}</strong></li>
                     <li>Age: <strong>TBD</strong></li>
-                    <li>Level: <strong>{{ pet_desc.get_level_desc(pet.level) }}</strong></li>
-                    <li>Vocation: <strong>{{ pet.vocation|capitalize }}</strong></li>
-                    <li>Health: <strong>{{ pet.current_health }} / {{ pet.max_health }}</strong></li>
-                    <li>Mood: <strong>{{ pet_desc.get_mood_desc(pet.mood) }}</strong></li>
-                    <li>Hunger: <strong>{{ pet_desc.get_hunger_desc(pet.hunger) }}</strong></li>
-                    <li>Strength: <strong>{{ pet_desc.get_strength_desc(pet.strength) }} ({{ pet.strength }})</strong></li>
-                    <li>Defence: <strong>{{ pet_desc.get_defense_desc(pet.defense) }} ({{ pet.defense }})</strong></li>
-                    <li>Move: <strong>{{ pet_desc.get_movement_desc(pet.movement) }} ({{ pet.movement }})</strong></li>
-                    <li>Intelligence: <strong>{{ pet_desc.get_intelligence_desc(pet.intelligence) }} ({{ pet.intelligence }})</strong></li>
+                    <li>Level: <strong>{{ pet_desc.get_level_desc(pet['level']) }}</strong></li>
+                    <li>Vocation: <strong>{{ pet['vocation']|capitalize }}</strong></li>
+                    <li>Health: <strong>{{ pet['current_health'] }} / {{ pet['max_health'] }}</strong></li>
+                    <li>Mood: <strong>{{ pet_desc.get_mood_desc(pet['mood']) }}</strong></li>
+                    <li>Hunger: <strong>{{ pet_desc.get_hunger_desc(pet['hunger']) }}</strong></li>
+                    <li>Strength: <strong>{{ pet_desc.get_strength_desc(pet['strength']) }} ({{ pet['strength'] }})</strong></li>
+                    <li>Defence: <strong>{{ pet_desc.get_defense_desc(pet['defense']) }} ({{ pet['defense'] }})</strong></li>
+                    <li>Move: <strong>{{ pet_desc.get_movement_desc(pet['movement']) }} ({{ pet['movement'] }})</strong></li>
+                    <li>Intelligence: <strong>{{ pet_desc.get_intelligence_desc(pet['intelligence']) }} ({{ pet['intelligence'] }})</strong></li>
                 </ul>
             </div>
         </div>
         <hr />
         <div>
-            <img src="{{ pet_desc.generate_battle_image_url(pet.species, pet.color, pet.vocation) }}" />
-            <p>Challenge {{ pet.name }} to a duel in the battledome!</p>
+            <img src="{{ pet_desc.generate_battle_image_url(pet['species'], pet['color'], pet['vocation']) }}" />
+            <p>Challenge {{ pet['name'] }} to a duel in the battledome!</p>
             <ul>
                 {% for skill in pet_skills %}
                 <li>{{ skill.skill_level_name }} ({{ skill.skill_name }} {{ skill.level }})</li>

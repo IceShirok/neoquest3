@@ -27,9 +27,14 @@ class User(UserMixin, db.Model):
         return '<User={}, email={}>'.format(self.username, self.email)
 
 
+class PetOwnership(db.Model):
+    username = db.Column(db.String(64))
+    pet_name = db.Column(db.String(64), primary_key=True)
+    is_active_pet = db.Column(db.Boolean())
+
+
 class Pet(db.Model):
     name = db.Column(db.String(64), primary_key=True)
-    owner = db.Column(db.String(64), index=True)
     species = db.Column(db.String(64))
     color = db.Column(db.String(64))
     gender = db.Column(db.Integer())
