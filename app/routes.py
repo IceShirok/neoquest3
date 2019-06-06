@@ -29,7 +29,9 @@ def login():
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html',
+                           title='Sign In',
+                           form=form)
 
 
 @app.route('/logout')
@@ -42,7 +44,8 @@ def logout():
 @app.route('/index')
 def index():
     return render_template('index.html',
-                           title='NeoQuest Portal')
+                           title='NeoQuest Portal',
+                           active_pet=get_active_pet())
 
 
 @app.route('/training')
@@ -68,14 +71,16 @@ def view_vocations():
     return render_template('training_grounds.html',
                            title='Training Grounds',
                            skills=skills,
-                           pet_desc=pet_desc)
+                           pet_desc=pet_desc,
+                           active_pet=get_active_pet())
 
 
 @app.route('/tavern', methods=['GET', 'POST'])
 @login_required
 def view_tavern():
     return render_template('tavern.html',
-                           title="The Tavern")
+                           title="The Tavern",
+                           active_pet=get_active_pet())
 
 
 @app.route('/guild', methods=['GET', 'POST'])
@@ -114,7 +119,8 @@ def view_pet_creation():
             return redirect(url_for('view_my_pets'))
     return render_template('guild.html',
                            title="Adventurers' Guild",
-                           form=form)
+                           form=form,
+                           active_pet=get_active_pet())
 
 
 @app.route('/exile')
@@ -124,7 +130,8 @@ def view_pet_exile():
     return render_template('exile.html',
                            title="Black Market",
                            pets=pets,
-                           pet_desc=pet_desc)
+                           pet_desc=pet_desc,
+                           active_pet=get_active_pet())
 
 
 @app.route('/exile/pet/<string:name>')
@@ -135,13 +142,17 @@ def exile_pet(name):
     if not relationship:
         flash('You can only exile your own pets!')
     else:
-        if relationship.is_active_pet:
+        active_set = relationship.is_active_pet
+
+        relationship = PetOwnership.query.filter_by(pet_name=name, username=current_user.username).first()
+        relationship.username = None
+        relationship.is_active_pet = False
+
+        if active_set:
             remaining_pets = PetOwnership.query.filter_by(username=current_user.username).all()
             if len(remaining_pets) > 0:
                 remaining_pets[0].is_active_pet = True
 
-        relationship = PetOwnership.query.filter_by(pet_name=name, username=current_user.username).first()
-        relationship.username = None
         db.session.commit()
     return redirect(url_for('view_my_pets'))
 
@@ -158,7 +169,8 @@ def view_pet_veterans():
     return render_template('veterans.html',
                            title="Black Market",
                            pets=pets,
-                           pet_desc=pet_desc)
+                           pet_desc=pet_desc,
+                           active_pet=get_active_pet())
 
 
 @app.route('/recruit/pet/<string:name>')
@@ -190,7 +202,8 @@ def view_user(name):
                            title='Pet Page',
                            pets=pets,
                            user=user,
-                           pet_desc=pet_desc)
+                           pet_desc=pet_desc,
+                           active_pet=get_active_pet())
 
 
 @app.route('/user/<string:username>/pets', methods=['GET'])
@@ -205,6 +218,17 @@ def get_pets_by_user(username):
         pets_list.append(pet)
 
     return pets_list
+
+
+def get_active_pet():
+    if current_user.is_authenticated:
+        active_pet = select([Pet, PetOwnership.username, PetOwnership.is_active_pet]) \
+            .where(Pet.name == PetOwnership.pet_name) \
+            .where(PetOwnership.is_active_pet == True)
+        active_pet = db.session.execute(active_pet).fetchone()
+        return active_pet
+    else:
+        return None
 
 
 @app.route('/pet/<string:name>', methods=['GET'])
@@ -226,4 +250,5 @@ def view_pet(name):
                            title='Pet Page',
                            pet=pet,
                            pet_skills=pet_skills,
-                           pet_desc=pet_desc)
+                           pet_desc=pet_desc,
+                           active_pet=get_active_pet())

@@ -23,6 +23,11 @@
                     <li class="nav-item">
                         <a href="{{ url_for('index') }}"><i class="material-icons">local_pizza</i> Home</a>
                     </li>
+                    {% if active_pet %}
+                    <li>
+                        <a href="{{ url_for('view_pet', name=active_pet.name) }}">Active Pet: {{ active_pet.name }}</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a href="{{ url_for('view_tavern') }}"><i class="material-icons">local_pizza</i> Tavern</a>
                     </li>
